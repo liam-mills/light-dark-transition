@@ -1,0 +1,146 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --neutral: #dbeafe;
+    --neutral-light: #dbeafe;
+    --box-light: #cbd5e1;
+    --box-highlight-light: #94a3b8;
+    --box-shadow-light: #64748b;
+    --box-dark: #475569;
+    --box-highlight-dark: #334155;
+    --box-shadow-dark: #1e293b;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary: #1d4ed8;
+        --neutral: #020617;
+    }
+}
+
+.banner {
+    height: 100svh;
+    background-color: var(--neutral);
+    position: relative;
+    overflow: hidden;
+    filter: grayscale(1);
+}
+
+h1 {
+    color: white;
+    font-family: 'Arial';
+    mix-blend-mode: difference;
+    font-size: 64px;
+    position: absolute;
+    top: calc(50% - 37px);
+    left: 12.5%;
+}
+
+.banner::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 200svw;
+    height: 200svw;
+    top: 0;
+    left: 50%;
+    /* left: calc(-12.5% - 100px); */
+    border-radius: 100%;
+    /* clip-path: circle(0%); */
+    /* transition: clip-path 1s ease-in-out; */
+    transform: scale(0);
+    transition: transform 1s ease-in-out;
+    background: var(--neutral-light);
+    filter: blur(200px);
+    pointer-events: none;
+}
+
+.banner:hover::before {
+    /* clip-path: circle(100%); */
+    transform: scale(2);
+}
+
+.box-container {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transition: transform 1s cubic-bezier(0.18, 0.23, 0.35, 1.01);
+}
+
+.box-container.light {
+    transform: translateY(100%);
+}
+
+.banner:hover .box-container.dark {
+    transform: translateY(100%);
+}
+
+.banner:hover .box-container.light {
+    transform: translateY(0);
+}
+
+.box-container.light .box {
+    background: var(--box-light);
+}
+.box-container.light .box::before {
+    background: var(--box-highlight-light);
+}
+.box-container.light .box::after {
+    background: var(--box-shadow-light);
+}
+.box-container.dark .box {
+    background: var(--box-dark);
+}
+.box-container.dark .box::before {
+    background: var(--box-highlight-dark);
+}
+.box-container.dark .box::after {
+    background: var(--box-shadow-dark);
+}
+
+.box {
+    display: block;
+    width: 200px;
+    height: 50svh;
+    position: absolute;
+    bottom: -40px;
+    right: 25%;
+    clip-path: polygon(50% 0, 0 12.5%, 0 100%, 100% 100%, 100% 12.5%);
+    animation: float 8s ease-in-out infinite;
+}
+
+.box::before, .box::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 12.5%;
+}
+
+.box::before {
+    clip-path: polygon(0 0, 100% 12.5%, 100% 100%, 0% 100%);
+}
+
+.box::after {
+    clip-path: polygon(0 12.5%, 100% 0, 100% 100%, 0% 100%);
+    right: 0;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(10px);
+    }
+}
